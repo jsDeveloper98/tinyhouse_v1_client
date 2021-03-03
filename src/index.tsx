@@ -1,10 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Listings } from './sections';
 import reportWebVitals from './reportWebVitals';
 
 render(
   <React.StrictMode>
-    <div>Hello World!</div>
+    <Listings title='Listings Component' />
   </React.StrictMode>,
   document.getElementById('root')
 );
