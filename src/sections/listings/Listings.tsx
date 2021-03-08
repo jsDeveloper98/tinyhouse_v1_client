@@ -1,9 +1,64 @@
-import * as React from 'react';
+import * as React from "react";
+import { server } from "../../lib/api";
+import {
+  ListingsData,
+  DeleteListingData,
+  DeleteListingVariables,
+} from "./types";
+
+const LISTINGS = `
+  query Listings {
+    listings {
+      id
+      title
+      image
+      address
+      price
+      numOfGuests
+      numOfBeds
+      numOfBaths
+      rating
+    }
+  }
+`;
+
+const DELETE_LISTING = `
+  mutation DeleteListing($id: ID!) {
+    deleteListing(id: $id) {
+      id
+    }
+  }
+`;
 
 interface Props {
-  title: string
+  title: string;
 }
 
 export const Listings = ({ title }: Props) => {
-  return <h2>{title}</h2>
-}
+  const fetchListings = async () => {
+    const { data } = await server.fetch<ListingsData>({ query: LISTINGS });
+    console.log(data.listings);
+  };
+
+  const deleteListing = async () => {
+    const { data } = await server.fetch<
+      DeleteListingData,
+      DeleteListingVariables
+    >({
+      query: DELETE_LISTING,
+      variables: {
+        id: "603b94523d40222524ef47e9",
+      },
+    });
+
+    console.log(data);
+  };
+
+  return (
+    <div>
+      <h2>{title}</h2>
+      <button onClick={fetchListings}>Query Listings!</button>
+      <button onClick={deleteListing}>Delete Listings!</button>
+    </div>
+  );
+};
