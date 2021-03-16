@@ -1,13 +1,21 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Listings } from './sections';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import { render } from "react-dom";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+import { Listings } from "./sections";
+import reportWebVitals from "./reportWebVitals";
+
+const client = new ApolloClient({
+  uri: "/api",
+});
 
 render(
   <React.StrictMode>
-    <Listings title='Listings Component' />
+    <ApolloProvider client={client}>
+      <Listings title="Listings Component" />
+    </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
